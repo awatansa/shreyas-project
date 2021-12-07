@@ -2,15 +2,15 @@
   display: flex !important;
 }
 
-.flex-wrap{
+.flex-wrap {
   flex-wrap: wrap;
 }
 
-.gap{
+.gap {
   gap: 1rem;
 }
 
-.p-1{
+.p-1 {
   padding: 1rem;
 }
 
@@ -19,20 +19,27 @@
   flex-direction: column;
 }
 
+.justify-center {
+  justify-content: center;
+}
 .center {
   justify-content: center;
   align-items: center;
 }
 
-.list-none{
+.align-center {
+  align-items: center;
+}
+
+.list-none {
   list-style: none;
 }
 
-.shadow{
+.shadow {
   box-shadow: 0 2px 5px 2px rgb(209, 209, 209);
 }
 
-.justify{
+.justify {
   justify-content: space-between;
   align-items: center;
 }

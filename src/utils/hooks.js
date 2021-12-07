@@ -1,67 +1,59 @@
-import { useEffect, useState } from "react";
-
 export function useApi() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [countries, setCountries] = useState([]);
-  const [isError, setIsError] = useState(false);
-  const [error, setError] = useState({});
-  const [fullData, setFullData] = useState([]); //====
-  const [stateList, setStateList] = useState([]);
-
-  useEffect(() => {
-    if (isLoading) {
-      fetch("https://countriesnow.space/api/v0.1/countries")
-        .then((res) => res.json())
-        .then((data) => {
-          setCountries(data.data);
-        })
-        .catch((e) => {
-          setIsError(true);
-          setError(e);
-        });
-
-      // fetch("https://countriesnow.space/api/v0.1/countries/states", {
-      //   method: "POST",
-      //   data: JSON.stringify({ country: "India" }),
-      //   mode: "no-cors",
-      //   headers: { "content-type": "application/json" },
-      // })
-      //   .then((res) => res.json())
-      //   .then((data) => setStateList(data.states));
-
-
-      // ====
-      fetch("https://countriesnow.space/api/v0.1/countries/states")
-        .then((res) => res.json())
-        .then((data) => {
-          setFullData(data.data);
-          setIsLoading(false);
-        })
-        .catch((e) => {
-          setIsError(true);
-          setError(e);
-        });
-        // ====
-    }
-  });
-
-
-// ====
-  function filterState(country) {
-    let states = fullData.filter((c) => c.name == country);
-    console.log(stateList);
-    setStateList(() => {
-      return states.states;
-    });
-  }
-  // ====
-
-  return {
-    countries,
-    stateList,
-    isLoading,
-    isError,
-    error,
-    filterState, //+++++
-  };
+  // const [fullData, setFullData] = useState([]);
+  // const [isLoading, setIsLoading] = useState(true);
+  // const [isError, setIsError] = useState(false);
+  // const [error, setError] = useState({});
+  // const [countryList, setCountryList] = useState([]);
+  // const [stateList, setStateList] = useState([]);
+  // const [isCountrySelected, setIsCountrySelected] = useState(false);
+  // useEffect(() => {
+  //   if (isLoading) {
+  //     fetch("https://countriesnow.space/api/v0.1/countries/states")
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         setFullData(data);
+  //         setCountryList(() => {
+  //           let countries = [];
+  //           data.data.forEach((country) => {
+  //             countries.push(country.name);
+  //           });
+  //           return countries;
+  //         });
+  //         setIsLoading(false);
+  //       })
+  //       .catch((e) => {
+  //         setIsError(true);
+  //         setError(e);
+  //       });
+  //   }
+  // }, []);
+  // function fetchStates(country) {
+  //   fetch("https://countriesnow.space/api/v0.1/countries/states", {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify({ country: country }),
+  //     mode: "no-cors",
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => console.log(data))
+  //     .catch((err) => console.log(err));
+  // }
+  // function setCountry(countryName) {
+  //   setIsCountrySelected(true);
+  //   setStateList(() => {
+  //     return fullData.data
+  //       .filter((country) => country.name === countryName)[0]
+  //       .states.map((state) => ({ id: state.state_code, name: state.name }));
+  //   });
+  // }
+  // return {
+  //   isLoading,
+  //   countryList,
+  //   stateList,
+  //   isError,
+  //   error,
+  //   setCountry,
+  //   isCountrySelected,
+  //   fetchStates,
+  // };
 }
