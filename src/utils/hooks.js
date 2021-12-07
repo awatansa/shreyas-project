@@ -1,59 +1,51 @@
-export function useApi() {
-  // const [fullData, setFullData] = useState([]);
-  // const [isLoading, setIsLoading] = useState(true);
-  // const [isError, setIsError] = useState(false);
-  // const [error, setError] = useState({});
-  // const [countryList, setCountryList] = useState([]);
-  // const [stateList, setStateList] = useState([]);
-  // const [isCountrySelected, setIsCountrySelected] = useState(false);
-  // useEffect(() => {
-  //   if (isLoading) {
-  //     fetch("https://countriesnow.space/api/v0.1/countries/states")
-  //       .then((res) => res.json())
-  //       .then((data) => {
-  //         setFullData(data);
-  //         setCountryList(() => {
-  //           let countries = [];
-  //           data.data.forEach((country) => {
-  //             countries.push(country.name);
-  //           });
-  //           return countries;
-  //         });
-  //         setIsLoading(false);
-  //       })
-  //       .catch((e) => {
-  //         setIsError(true);
-  //         setError(e);
-  //       });
-  //   }
-  // }, []);
-  // function fetchStates(country) {
-  //   fetch("https://countriesnow.space/api/v0.1/countries/states", {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify({ country: country }),
-  //     mode: "no-cors",
-  //   })
-  //     .then((res) => res.json())
-  //     .then((data) => console.log(data))
-  //     .catch((err) => console.log(err));
-  // }
-  // function setCountry(countryName) {
-  //   setIsCountrySelected(true);
-  //   setStateList(() => {
-  //     return fullData.data
-  //       .filter((country) => country.name === countryName)[0]
-  //       .states.map((state) => ({ id: state.state_code, name: state.name }));
-  //   });
-  // }
-  // return {
-  //   isLoading,
-  //   countryList,
-  //   stateList,
-  //   isError,
-  //   error,
-  //   setCountry,
-  //   isCountrySelected,
-  //   fetchStates,
-  // };
+import { useEffect, useState } from "react";
+
+export function useApiMutation(countryName) {
+  const [isLoading, setIsLoading] = useState(true);
+  const [data, setData] = useState({});
+  const [error, setError] = useState();
+  const [isError, setIsError] = useState(false);
+
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accepts: "*/*",
+      Connection: "keep-alive",
+    },
+    data: JSON.parse(JSON.stringify({ country: countryName })),
+  };
+
+  fetch("https://countriesnow.space/api/v0.1/countries/states", options)
+    .then((res) => res.json())
+    .then((data) => {
+      setData(data);
+      setIsLoading(false);
+    })
+    .catch((error) => {
+      setIsError(true), setError(error);
+    });
+  return { data, isLoading, isError, error };
+}
+
+export function useApiQuery() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [data, setData] = useState({});
+  const [error, setError] = useState();
+  const [isError, setIsError] = useState(false);
+
+  useEffect(() => {
+    fetch("https://countriesnow.space/api/v0.1/countries")
+      .then((res) => res.json())
+      .then((data) => {
+        setData(data);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        setError(error);
+        setIsError(true);
+      });
+  });
+
+  return { data, isLoading, isError, error };
 }
